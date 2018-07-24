@@ -1,0 +1,6 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="activity_horizontal_margin">64dp</dimen>
+    <dimen name="cardMarginHorizontal">2dp</dimen>
+    <dimen name="cardMarginVertical">1dp</dimen>
+</resources>
