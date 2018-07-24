@@ -19,6 +19,8 @@ import com.example.serg.albumartwork.ArtworkApplication;
 import com.example.serg.albumartwork.Model.Catalog;
 import com.example.serg.albumartwork.Utils.JsonParser;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -44,7 +46,13 @@ public class iTunesAPIService extends IntentService {
                 Bundle bundle = intent.getBundleExtra(AppResources.INTENT_BUNDLE);
                 if(bundle.getString(AppResources.SERVICE_CMD).equals(AppResources.SERVICE_SEARCH_ALBUM)){
                     String query = bundle.getString(AppResources.SEARCH_QUERY);
-                    String searchQuery = ApiUrl + "term=" + query + "&entity=album";
+                    String encodedQuery = null;
+                    try {
+                        encodedQuery = URLEncoder.encode(query, "utf-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    String searchQuery = ApiUrl + "term=" + encodedQuery + "&entity=album";
                     Log.d("Intent", searchQuery);
                     StringRequest stringRequest = new StringRequest(Request.Method.GET,
                             searchQuery, new Response.Listener<String>() {
@@ -53,19 +61,6 @@ public class iTunesAPIService extends IntentService {
                             Toast.makeText(iTunesAPIService.this, response.substring(0, 30), Toast.LENGTH_SHORT).show();
                             Log.d("Intent", response);
                             catalog.setCatalog(JsonParser.parse(response));
-                            /*String lookup = lookupApiUrl + "id=" + catalog.getAlbums().get(0).getiTunesId() + "&entity=song";
-                            StringRequest req = new StringRequest(Request.Method.GET,
-                                    lookup, new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    Log.d("Intent album", response);
-                                }
-                            }, new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    Log.d("Intent", "error in reqqqqqq!");
-                                }
-                            });*/
                         }
                     }, new Response.ErrorListener() {
                         @Override
@@ -77,7 +72,7 @@ public class iTunesAPIService extends IntentService {
                     queue.start();
                 }else {
                     final int albumNum = bundle.getInt(AppResources.ALBUM_NUMBER);
-                    String lookup = lookupApiUrl + "id=" + catalog.getAlbums().get(albumNum).getiTunesId() + "&entity=song";
+                    String lookup = lookupApiUrl + "id=" + catalog.getAlbums().get(albumNum).getiTunesId() + "&entity=song&explicit=Yes";
                     StringRequest req = new StringRequest(Request.Method.GET,
                             lookup, new Response.Listener<String>() {
                         @Override

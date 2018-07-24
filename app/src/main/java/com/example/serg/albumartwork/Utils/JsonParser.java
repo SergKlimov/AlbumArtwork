@@ -62,7 +62,8 @@ public class JsonParser {
             try {
                 JSONObject response = new JSONObject(responseResult);
                 JSONArray jsonTracks = response.getJSONArray("results");
-                for (int i = 1; i < album.getTracksCount() + 1; i++){
+                //for (int i = 1; i < album.getTracksCount() + 1; i++){
+                for (int i = 1; i < response.getInt("resultCount"); i++){
                     JSONObject jsonTrack = jsonTracks.getJSONObject(i);
                     tracks.add(new Track(jsonTrack.getString("artistName"),
                             jsonTrack.getString("trackName"),
