@@ -19,14 +19,10 @@ public class AlbumPresenter implements IAlbumPresenter {
 
     private IAlbumView albumView;
     @Inject GlideRequests glideRequests;
-    //@Inject View.OnClickListener clickListener;
-    //private AlbumClicked albumClicked;
 
-    public AlbumPresenter(IAlbumView albumView/*, AlbumClicked albumClicked*/) {
+    public AlbumPresenter(IAlbumView albumView) {
         this.albumView = albumView;
-        //this.albumClicked = albumClicked;
         glideRequests = ArtworkApplication.getComponent().getGldie();
-        //clickListener = ArtworkApplication.getComponent().showAlbumInfo();
     }
 
     @Override
@@ -39,12 +35,7 @@ public class AlbumPresenter implements IAlbumPresenter {
             albumView.setName(album.getName());
             albumView.setYear(album.getReleaseDate());
             albumView.setTracksCount(String.valueOf(album.getTracksCount()));
-
             RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) albumView;
-
-            //viewHolder.itemView.setOnClickListener(clickListener);
-            //viewHolder.itemView.setOnClickListener(albumClicked.showAlbumInfo());
-
             viewHolder.itemView.setOnClickListener(clickListener);
         }
     }

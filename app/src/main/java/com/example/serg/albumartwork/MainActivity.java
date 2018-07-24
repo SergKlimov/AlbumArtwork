@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity implements LayoutManagerProv
     @Inject ICatalogPresenter catalogPresenter;
     @Inject Catalog catalog;
     @Inject GlideRequests glideRequests;
-    //private AppCompatImageView img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,8 +78,6 @@ public class MainActivity extends AppCompatActivity implements LayoutManagerProv
 
     @Override
     protected void onNewIntent(Intent intent) {
-        /*glideRequests.load("https://is4-ssl.mzstatic.com/image/thumb/Music/v4/03/4d/45/034d451a-0098-5b51-37c4-f301471d614e/source/100x100bb.jpg").
-                into(img);*/
         if (Intent.ACTION_SEARCH.equals(intent.getAction())){
             String query = intent.getStringExtra(SearchManager.QUERY);
             Intent i = new Intent(this, iTunesAPIService.class);
@@ -104,22 +101,14 @@ public class MainActivity extends AppCompatActivity implements LayoutManagerProv
             @Override
             public void onClick(View view) {
                 int albumNum = (int) view.getTag(R.integer.albumNum);
-
                 Intent i = new Intent(getApplicationContext(), iTunesAPIService.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt(AppResources.ALBUM_NUMBER, albumNum);
                 bundle.putString(AppResources.SERVICE_CMD, AppResources.SERVICE_GET_TRACKS);
                 i.putExtra(AppResources.INTENT_BUNDLE, bundle);
                 startService(i);
-                /*Intent showAlbumInfo = new Intent(getApplicationContext(), AlbumInfoActivity.class);
-                showAlbumInfo.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                Bundle b = new Bundle();
-                b.putInt(AppResources.ALBUM_NUMBER, albumNum);
-                showAlbumInfo.putExtra(AppResources.ALBUM_NUMBER_BUNDLE, b);
-                startActivity(showAlbumInfo);*/
 
                 Intent showAlbumInfo = new Intent(MainActivity.this, AlbumInfoActivity.class);
-                //showAlbumInfo.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 Bundle b = new Bundle();
                 b.putInt(AppResources.ALBUM_NUMBER, albumNum);
                 showAlbumInfo.putExtra(AppResources.ALBUM_NUMBER_BUNDLE, b);

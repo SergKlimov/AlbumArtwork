@@ -20,11 +20,6 @@ public class AlbumView extends RecyclerView.ViewHolder implements IAlbumView {
         this.cover = cover;
     }
 
-    /*@Override
-    public void setCover(String cover) {
-        this.cover.setText(cover);
-    }*/
-
     @Override
     public void setName(String albumName) {
         this.albumName.setText(albumName);

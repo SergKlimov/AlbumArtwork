@@ -44,7 +44,6 @@ public class iTunesAPIService extends IntentService {
                 Bundle bundle = intent.getBundleExtra(AppResources.INTENT_BUNDLE);
                 if(bundle.getString(AppResources.SERVICE_CMD).equals(AppResources.SERVICE_SEARCH_ALBUM)){
                     String query = bundle.getString(AppResources.SEARCH_QUERY);
-                    //RequestQueue queue = Volley.newRequestQueue(this);
                     String searchQuery = ApiUrl + "term=" + query + "&entity=album";
                     Log.d("Intent", searchQuery);
                     StringRequest stringRequest = new StringRequest(Request.Method.GET,
@@ -54,8 +53,6 @@ public class iTunesAPIService extends IntentService {
                             Toast.makeText(iTunesAPIService.this, response.substring(0, 30), Toast.LENGTH_SHORT).show();
                             Log.d("Intent", response);
                             catalog.setCatalog(JsonParser.parse(response));
-                            //JsonParser.printAlbum(catalog.getAlbums().get(0));
-                            //JsonParser.printAlbum(catalog.getAlbums().get(catalog.getAlbums().size()-1));
                             String lookup = lookupApiUrl + "id=" + catalog.getAlbums().get(0).getiTunesId() + "&entity=song";
                             StringRequest req = new StringRequest(Request.Method.GET,
                                     lookup, new Response.Listener<String>() {
@@ -77,22 +74,6 @@ public class iTunesAPIService extends IntentService {
                         }
                     });
                     queue.add(stringRequest);
-
-                    /*String lookup = lookupApiUrl + "id=" + catalog.getAlbums().get(0).getiTunesId() + "&entity=song";
-                    StringRequest req = new StringRequest(Request.Method.GET,
-                            lookup, new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            Log.d("Intent album", response);
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Log.d("Intent", "error in reqqqqqq!");
-                        }
-                    });
-
-                    queue.add(req);*/
                     queue.start();
                 }else {
                     final int albumNum = bundle.getInt(AppResources.ALBUM_NUMBER);
@@ -103,16 +84,6 @@ public class iTunesAPIService extends IntentService {
                         public void onResponse(String response) {
                             Log.d("Intent album", response);
                             JsonParser.loadTracks(response, catalog, albumNum);
-
-                            //JsonParser.printAlbumTracks(catalog.getAlbums().get(albumNum));
-
-                            /*Intent showAlbumInfo = new Intent(getApplicationContext(), AlbumInfoActivity.class);
-                            showAlbumInfo.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            Bundle b = new Bundle();
-                            b.putInt(AppResources.ALBUM_NUMBER, albumNum);
-                            showAlbumInfo.putExtra(AppResources.ALBUM_NUMBER_BUNDLE, b);
-                            startActivity(showAlbumInfo);*/
-
                         }
                     }, new Response.ErrorListener() {
                         @Override

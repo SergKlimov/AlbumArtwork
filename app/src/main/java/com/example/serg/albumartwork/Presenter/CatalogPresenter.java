@@ -25,20 +25,15 @@ public class CatalogPresenter implements ICatalogPresenter {
     private final ICatalogView catalogView;
     private final LayoutManagerProvider provider;
     private AlbumClicked albumClicked;
-    //private final Activity activity;
-    //private List<Album> albums;
 
-    public CatalogPresenter(ICatalogView catalogView,/*, Activity activity, List<Album> albums*/LayoutManagerProvider provider, AlbumClicked albumClicked) {
+    public CatalogPresenter(ICatalogView catalogView,LayoutManagerProvider provider, AlbumClicked albumClicked) {
         this.catalogView= catalogView;
-        //this.activity = activity;
-        //this.albums = albums;
         this.provider = provider;
         this.albumClicked = albumClicked;
     }
 
     @Override
     public void updateCatalog(Catalog catalog){
-        //RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.activity);
         RecyclerView.LayoutManager layoutManager = provider.provideLayoutManger();
         catalogView.getAlbumsRecyclerView().setLayoutManager(layoutManager);
         catalogView.getAlbumsRecyclerView().setHasFixedSize(true);
@@ -57,9 +52,8 @@ public class CatalogPresenter implements ICatalogPresenter {
 
     private static class AlbumsAdapter extends RecyclerView.Adapter<AlbumView> {
 
-        /*private AlbumClicked albumClicked;*/
         private AlbumClicked albumClicked;
-        List<Album> albums;
+        private List<Album> albums;
 
         public AlbumsAdapter(Catalog catalog, AlbumClicked albumClicked) {
             this.albums = catalog.getAlbums();

@@ -22,5 +22,4 @@ public interface MainComponent {
     //void inject(MainActivity mainActivity);
     Catalog getCatalog();
     GlideRequests getGldie();
-    //View.OnClickListener showAlbumInfo();
 }

@@ -47,13 +47,6 @@ public class AlbumInfoActivity extends AppCompatActivity implements LayoutManage
         if(null != bundle){
             albumNum = bundle.getInt(AppResources.ALBUM_NUMBER);
             albumInfoPresenter.updateAlbumInfo(catalog.getAlbums().get(albumNum));
-            /*String albums = "";
-            for (int i =0; i<catalog.getAlbums().get(albumNum).getTrackList().size();i++){
-                albums+=catalog.getAlbums().get(albumNum).getTrackList().get(i).getTrackName();
-                albums+="\n";
-            }
-            num.setText(albums);*/
-
         }else {
             Log.d("AlbumInfoActivity", "NOOOOOO!");
         }

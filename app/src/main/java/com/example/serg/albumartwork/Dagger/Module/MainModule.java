@@ -31,9 +31,4 @@ public class MainModule {
     GlideRequests provideGlide(ArtworkApplication app) {
         return app.getGlide();
     }
-
-    /*@Provides
-    View.OnClickListener provideClickListener(ArtworkApplication app) {
-        return app.showAlbumInfo();
-    }*/
 }
