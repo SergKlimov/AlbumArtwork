@@ -9,8 +9,17 @@ public class Album {
     private String releaseDate;
     private String genre;
     private String artist;
-    private List<String> trackList;
+    private List<Track> trackList;
     private int tracksCount;
+    private int iTunesId;
+
+    public int getiTunesId() {
+        return iTunesId;
+    }
+
+    public void setiTunesId(int iTunesId) {
+        this.iTunesId = iTunesId;
+    }
 
     public int getTracksCount() {
         return tracksCount;
@@ -20,7 +29,7 @@ public class Album {
         this.tracksCount = tracksCount;
     }
 
-    public Album(String name, String cover, String releaseDate, String genre, String artist, List<String> trackList, int tracksCount) {
+    public Album(String name, String cover, String releaseDate, String genre, String artist, List<Track> trackList, int tracksCount, int iTunesId) {
         this.name = name;
         this.cover = cover;
         this.releaseDate = releaseDate;
@@ -28,6 +37,7 @@ public class Album {
         this.artist = artist;
         this.trackList = trackList;
         this.tracksCount = tracksCount;
+        this.iTunesId = iTunesId;
     }
 
     public String getName() {
@@ -70,11 +80,11 @@ public class Album {
         this.artist = artist;
     }
 
-    public List<String> getTrackList() {
+    public List<Track> getTrackList() {
         return trackList;
     }
 
-    public void setTrackList(List<String> trackList) {
+    public void setTrackList(List<Track> trackList) {
         this.trackList = trackList;
     }
 }

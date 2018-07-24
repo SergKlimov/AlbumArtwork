@@ -22,6 +22,12 @@ public class Catalog extends Observable {
         modified();
     }
 
+    public void setAlbumTracks(int albmNum, List<Track> tracks){
+        this.albums.get(albmNum).setTrackList(tracks);
+        setChanged();
+        notifyObservers(albums.get(albmNum));
+    }
+
     public void setCatalog(Catalog catalog){
         this.setAlbums(catalog.getAlbums());
     }

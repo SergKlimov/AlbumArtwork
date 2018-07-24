@@ -13,9 +13,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.serg.albumartwork.AlbumInfoActivity;
 import com.example.serg.albumartwork.AppResources;
 import com.example.serg.albumartwork.ArtworkApplication;
-import com.example.serg.albumartwork.Model.Album;
 import com.example.serg.albumartwork.Model.Catalog;
 import com.example.serg.albumartwork.Utils.JsonParser;
 
@@ -28,6 +28,7 @@ public class iTunesAPIService extends IntentService {
     @Inject Catalog catalog;
 
     private String ApiUrl = "https://itunes.apple.com/search?";
+    private String lookupApiUrl = "https://itunes.apple.com/lookup?";
 
     public iTunesAPIService() {
         super("iTunesAPIService");
@@ -37,30 +38,91 @@ public class iTunesAPIService extends IntentService {
     protected void onHandleIntent(@Nullable Intent intent) {
         Log.d("Intent", "onHandleIntent tut!");
         catalog = ArtworkApplication.getComponent().getCatalog();
+        RequestQueue queue = Volley.newRequestQueue(this);
         if (intent != null){
             if (intent.getBundleExtra(AppResources.INTENT_BUNDLE) != null) {
                 Bundle bundle = intent.getBundleExtra(AppResources.INTENT_BUNDLE);
-                String query = bundle.getString(AppResources.SEARCH_QUERY);
-                RequestQueue queue = Volley.newRequestQueue(this);
-                String searchQuery = ApiUrl + "term=" + query + "&entity=album";
-                Log.d("Intent", searchQuery);
-                StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                        searchQuery, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Toast.makeText(iTunesAPIService.this, response.substring(0, 30), Toast.LENGTH_SHORT).show();
-                        Log.d("Intent", response);
-                        catalog.setCatalog(JsonParser.parse(response));
-                        JsonParser.printAlbum(catalog.getAlbums().get(0));
-                        JsonParser.printAlbum(catalog.getAlbums().get(catalog.getAlbums().size()-1));
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("Intent", "error in req!");
-                    }
-                });
-                queue.add(stringRequest);
+                if(bundle.getString(AppResources.SERVICE_CMD).equals(AppResources.SERVICE_SEARCH_ALBUM)){
+                    String query = bundle.getString(AppResources.SEARCH_QUERY);
+                    //RequestQueue queue = Volley.newRequestQueue(this);
+                    String searchQuery = ApiUrl + "term=" + query + "&entity=album";
+                    Log.d("Intent", searchQuery);
+                    StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                            searchQuery, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Toast.makeText(iTunesAPIService.this, response.substring(0, 30), Toast.LENGTH_SHORT).show();
+                            Log.d("Intent", response);
+                            catalog.setCatalog(JsonParser.parse(response));
+                            //JsonParser.printAlbum(catalog.getAlbums().get(0));
+                            //JsonParser.printAlbum(catalog.getAlbums().get(catalog.getAlbums().size()-1));
+                            String lookup = lookupApiUrl + "id=" + catalog.getAlbums().get(0).getiTunesId() + "&entity=song";
+                            StringRequest req = new StringRequest(Request.Method.GET,
+                                    lookup, new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    Log.d("Intent album", response);
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Log.d("Intent", "error in reqqqqqq!");
+                                }
+                            });
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("Intent", "error in req!");
+                        }
+                    });
+                    queue.add(stringRequest);
+
+                    /*String lookup = lookupApiUrl + "id=" + catalog.getAlbums().get(0).getiTunesId() + "&entity=song";
+                    StringRequest req = new StringRequest(Request.Method.GET,
+                            lookup, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.d("Intent album", response);
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("Intent", "error in reqqqqqq!");
+                        }
+                    });
+
+                    queue.add(req);*/
+                    queue.start();
+                }else {
+                    final int albumNum = bundle.getInt(AppResources.ALBUM_NUMBER);
+                    String lookup = lookupApiUrl + "id=" + catalog.getAlbums().get(albumNum).getiTunesId() + "&entity=song";
+                    StringRequest req = new StringRequest(Request.Method.GET,
+                            lookup, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.d("Intent album", response);
+                            JsonParser.loadTracks(response, catalog, albumNum);
+
+                            //JsonParser.printAlbumTracks(catalog.getAlbums().get(albumNum));
+
+                            /*Intent showAlbumInfo = new Intent(getApplicationContext(), AlbumInfoActivity.class);
+                            showAlbumInfo.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            Bundle b = new Bundle();
+                            b.putInt(AppResources.ALBUM_NUMBER, albumNum);
+                            showAlbumInfo.putExtra(AppResources.ALBUM_NUMBER_BUNDLE, b);
+                            startActivity(showAlbumInfo);*/
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("Intent", "error in reqqqqqq!");
+                        }
+                    });
+
+                    queue.add(req);
+                }
                 queue.start();
             }
         }

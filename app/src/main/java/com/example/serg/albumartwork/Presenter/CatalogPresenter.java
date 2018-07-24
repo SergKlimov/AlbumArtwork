@@ -1,7 +1,6 @@
 package com.example.serg.albumartwork.Presenter;
 
 import android.support.v7.widget.AppCompatImageView;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,11 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.serg.albumartwork.AlbumClicked;
 import com.example.serg.albumartwork.LayoutManagerProvider;
 import com.example.serg.albumartwork.Model.Album;
 import com.example.serg.albumartwork.Model.Catalog;
 import com.example.serg.albumartwork.R;
 import com.example.serg.albumartwork.View.AlbumView;
+import com.example.serg.albumartwork.View.IAlbumView;
 import com.example.serg.albumartwork.View.ICatalogView;
 
 import java.util.List;
@@ -23,14 +24,16 @@ public class CatalogPresenter implements ICatalogPresenter {
 
     private final ICatalogView catalogView;
     private final LayoutManagerProvider provider;
+    private AlbumClicked albumClicked;
     //private final Activity activity;
     //private List<Album> albums;
 
-    public CatalogPresenter(ICatalogView catalogView,/*, Activity activity, List<Album> albums*/LayoutManagerProvider provider) {
+    public CatalogPresenter(ICatalogView catalogView,/*, Activity activity, List<Album> albums*/LayoutManagerProvider provider, AlbumClicked albumClicked) {
         this.catalogView= catalogView;
         //this.activity = activity;
         //this.albums = albums;
         this.provider = provider;
+        this.albumClicked = albumClicked;
     }
 
     @Override
@@ -40,7 +43,7 @@ public class CatalogPresenter implements ICatalogPresenter {
         catalogView.getAlbumsRecyclerView().setLayoutManager(layoutManager);
         catalogView.getAlbumsRecyclerView().setHasFixedSize(true);
         catalogView.getAlbumsRecyclerView().setAdapter(
-                new AlbumsAdapter(catalog));
+                new AlbumsAdapter(catalog, albumClicked));
     }
 
     @Override
@@ -52,12 +55,15 @@ public class CatalogPresenter implements ICatalogPresenter {
         }
     }
 
-    private static class AlbumsAdapter extends RecyclerView.Adapter<AlbumView>{
+    private static class AlbumsAdapter extends RecyclerView.Adapter<AlbumView> {
 
+        /*private AlbumClicked albumClicked;*/
+        private AlbumClicked albumClicked;
         List<Album> albums;
 
-        public AlbumsAdapter(Catalog catalog) {
+        public AlbumsAdapter(Catalog catalog, AlbumClicked albumClicked) {
             this.albums = catalog.getAlbums();
+            this.albumClicked= albumClicked;
         }
 
         @Override
@@ -77,8 +83,10 @@ public class CatalogPresenter implements ICatalogPresenter {
 
         @Override
         public void onBindViewHolder(AlbumView holder, int position) {
-            IAlbumPresenter albumPresenter = new AlbumPresenter(holder);
-            albumPresenter.updateAlbum(albums.get(position));
+            RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) holder;
+            viewHolder.itemView.setTag(R.integer.albumNum, position);
+            IAlbumPresenter albumPresenter = new AlbumPresenter((IAlbumView) viewHolder/*, albumClicked*/);
+            albumPresenter.updateAlbum(albums.get(position), albumClicked.showAlbumInfo());
             Log.d("bindView", "pos: " + position);
         }
 

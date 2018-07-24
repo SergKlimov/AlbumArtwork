@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
 import android.widget.SearchView;
 
 import com.example.serg.albumartwork.Dagger.Component.CatalogPresComponent;
@@ -26,7 +27,7 @@ import com.example.serg.albumartwork.iTunesAPI.iTunesAPIService;
 
 import javax.inject.Inject;
 
-public class MainActivity extends AppCompatActivity implements LayoutManagerProvider {
+public class MainActivity extends AppCompatActivity implements LayoutManagerProvider, AlbumClicked {
 
     private ICatalogView catalogView;
     private CatalogPresComponent catalogPresComponent;
@@ -40,13 +41,11 @@ public class MainActivity extends AppCompatActivity implements LayoutManagerProv
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
         catalogView = new CatalogView((RecyclerView)findViewById(R.id.albums_recycler));
         catalog = ArtworkApplication.getComponent().getCatalog();
         glideRequests = ArtworkApplication.getComponent().getGldie();
         catalogPresComponent = DaggerCatalogPresComponent.builder()
-                .catalogPresModule(new CatalogPresModule(catalogView, this))
+                .catalogPresModule(new CatalogPresModule(catalogView, this, this))
                 .build();
         catalogPresenter = catalogPresComponent.getCatalogPresenter();
         catalogPresenter.updateCatalog(catalog);
@@ -87,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements LayoutManagerProv
             Intent i = new Intent(this, iTunesAPIService.class);
             Bundle bundle = new Bundle();
             bundle.putString(AppResources.SEARCH_QUERY, query);
+            bundle.putString(AppResources.SERVICE_CMD, AppResources.SERVICE_SEARCH_ALBUM);
             i.putExtra(AppResources.INTENT_BUNDLE, bundle);
             startService(i);
             Log.d("Deb", "intent started!");
@@ -96,5 +96,36 @@ public class MainActivity extends AppCompatActivity implements LayoutManagerProv
     @Override
     public RecyclerView.LayoutManager provideLayoutManger() {
         return new LinearLayoutManager(this);
+    }
+
+    @Override
+    public View.OnClickListener showAlbumInfo() {
+        View.OnClickListener clickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int albumNum = (int) view.getTag(R.integer.albumNum);
+
+                Intent i = new Intent(getApplicationContext(), iTunesAPIService.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt(AppResources.ALBUM_NUMBER, albumNum);
+                bundle.putString(AppResources.SERVICE_CMD, AppResources.SERVICE_GET_TRACKS);
+                i.putExtra(AppResources.INTENT_BUNDLE, bundle);
+                startService(i);
+                /*Intent showAlbumInfo = new Intent(getApplicationContext(), AlbumInfoActivity.class);
+                showAlbumInfo.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Bundle b = new Bundle();
+                b.putInt(AppResources.ALBUM_NUMBER, albumNum);
+                showAlbumInfo.putExtra(AppResources.ALBUM_NUMBER_BUNDLE, b);
+                startActivity(showAlbumInfo);*/
+
+                Intent showAlbumInfo = new Intent(MainActivity.this, AlbumInfoActivity.class);
+                //showAlbumInfo.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Bundle b = new Bundle();
+                b.putInt(AppResources.ALBUM_NUMBER, albumNum);
+                showAlbumInfo.putExtra(AppResources.ALBUM_NUMBER_BUNDLE, b);
+                startActivity(showAlbumInfo);
+            }
+        };
+        return clickListener;
     }
 }
