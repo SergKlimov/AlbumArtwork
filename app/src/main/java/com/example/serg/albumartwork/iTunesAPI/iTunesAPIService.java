@@ -53,7 +53,7 @@ public class iTunesAPIService extends IntentService {
                             Toast.makeText(iTunesAPIService.this, response.substring(0, 30), Toast.LENGTH_SHORT).show();
                             Log.d("Intent", response);
                             catalog.setCatalog(JsonParser.parse(response));
-                            String lookup = lookupApiUrl + "id=" + catalog.getAlbums().get(0).getiTunesId() + "&entity=song";
+                            /*String lookup = lookupApiUrl + "id=" + catalog.getAlbums().get(0).getiTunesId() + "&entity=song";
                             StringRequest req = new StringRequest(Request.Method.GET,
                                     lookup, new Response.Listener<String>() {
                                 @Override
@@ -65,7 +65,7 @@ public class iTunesAPIService extends IntentService {
                                 public void onErrorResponse(VolleyError error) {
                                     Log.d("Intent", "error in reqqqqqq!");
                                 }
-                            });
+                            });*/
                         }
                     }, new Response.ErrorListener() {
                         @Override

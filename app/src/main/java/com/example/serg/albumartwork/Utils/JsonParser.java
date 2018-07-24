@@ -12,6 +12,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class JsonParser {
@@ -37,6 +39,14 @@ public class JsonParser {
                     ));
                     Log.d("Parser", "tracks: "+album.getInt("trackCount"));
                 }
+                Collections.sort(albums, new Comparator<Album>() {
+                    @Override
+                    public int compare(Album album1, Album album2) {
+                        String left = album1.getName();
+                        String right = album2.getName();
+                        return left.compareTo(right);
+                    }
+                });
                 catalog = new Catalog(albums);
             } catch (JSONException e) {
                 e.printStackTrace();
