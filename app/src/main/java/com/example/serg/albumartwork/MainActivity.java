@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -42,7 +43,8 @@ public class MainActivity extends AppCompatActivity implements LayoutManagerProv
         setContentView(R.layout.activity_main);
 
         catalogView = new CatalogView((RecyclerView)findViewById(R.id.albums_recycler),
-                (ProgressBar)findViewById(R.id.catalog_progress));
+                (ProgressBar)findViewById(R.id.catalog_progress),
+                (AppCompatTextView)findViewById(R.id.not_found));
         catalog = ArtworkApplication.getComponent().getCatalog();
         glideRequests = ArtworkApplication.getComponent().getGldie();
         catalogPresComponent = DaggerCatalogPresComponent.builder()

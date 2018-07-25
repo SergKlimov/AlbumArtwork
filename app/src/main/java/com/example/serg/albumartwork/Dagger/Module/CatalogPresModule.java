@@ -13,13 +13,11 @@ import dagger.Provides;
 public class CatalogPresModule {
     private final ICatalogView catalogView;
     private final LayoutManagerProvider provider;
-
     private AlbumClicked albumClicked;
 
     public CatalogPresModule(ICatalogView catalogView, LayoutManagerProvider provider, AlbumClicked albumClicked) {
         this.catalogView = catalogView;
         this.provider = provider;
-
         this.albumClicked = albumClicked;
     }
 

@@ -11,6 +11,9 @@ import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.serg.albumartwork.Dagger.Component.AlbumInfoPresenterComponent;
+import com.example.serg.albumartwork.Dagger.Component.DaggerAlbumInfoPresenterComponent;
+import com.example.serg.albumartwork.Dagger.Module.AlbumInfoPresenterModule;
 import com.example.serg.albumartwork.Dagger.Module.GlideRequests;
 import com.example.serg.albumartwork.Model.Catalog;
 import com.example.serg.albumartwork.Presenter.AlbumInfoPresenter;
@@ -23,9 +26,10 @@ import javax.inject.Inject;
 public class AlbumInfoActivity extends AppCompatActivity implements LayoutManagerProvider {
 
     private IAlbumInfoView albumInfoView;
-    private IAlbumInfoPresenter albumInfoPresenter;
+    private AlbumInfoPresenterComponent component;
     @Inject Catalog catalog;
     @Inject GlideRequests glideRequests;
+    @Inject IAlbumInfoPresenter albumInfoPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,16 +38,17 @@ public class AlbumInfoActivity extends AppCompatActivity implements LayoutManage
         albumInfoView = new AlbumInfoView(
                 (AppCompatTextView)findViewById(R.id.album_name),
                 (AppCompatTextView)findViewById(R.id.album_artist),
-                //(AppCompatTextView)findViewById(R.id.album_tracks_count),
                 (AppCompatTextView)findViewById(R.id.album_genre),
-                //(AppCompatTextView)findViewById(R.id.album_release_date),
                 (AppCompatImageView)findViewById(R.id.album_cover),
                 (RecyclerView)findViewById(R.id.tracks_recycler),
                 (ProgressBar)findViewById(R.id.progress_bar)
         );
+        component = DaggerAlbumInfoPresenterComponent.builder()
+                .albumInfoPresenterModule(new AlbumInfoPresenterModule(albumInfoView, this))
+                .build();
+        albumInfoPresenter = component.getAlbumInfoPresenter();
         catalog = ArtworkApplication.getComponent().getCatalog();
         glideRequests = ArtworkApplication.getComponent().getGldie();
-        albumInfoPresenter = new AlbumInfoPresenter(albumInfoView, this);
     }
 
     @Override

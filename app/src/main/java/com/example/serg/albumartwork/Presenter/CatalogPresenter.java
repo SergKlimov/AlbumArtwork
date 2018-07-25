@@ -47,7 +47,13 @@ public class CatalogPresenter implements ICatalogPresenter {
             Catalog catalog = (Catalog) o;
             Log.d("CatPres", "Update!");
             hideProgress();
-            updateCatalog(catalog);
+            if(catalog.getAlbums().size() != 0) {
+                catalogView.getNothingFound().setVisibility(View.INVISIBLE);
+                updateCatalog(catalog);
+            } else{
+                catalogView.getNothingFound().setVisibility(View.VISIBLE);
+                catalogView.getAlbumsRecyclerView().setVisibility(View.INVISIBLE);
+            }
         }
     }
 
