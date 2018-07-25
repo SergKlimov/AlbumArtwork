@@ -8,6 +8,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.serg.albumartwork.Dagger.Module.GlideRequests;
@@ -37,7 +38,8 @@ public class AlbumInfoActivity extends AppCompatActivity implements LayoutManage
                 (AppCompatTextView)findViewById(R.id.album_genre),
                 //(AppCompatTextView)findViewById(R.id.album_release_date),
                 (AppCompatImageView)findViewById(R.id.album_cover),
-                (RecyclerView)findViewById(R.id.tracks_recycler)
+                (RecyclerView)findViewById(R.id.tracks_recycler),
+                (ProgressBar)findViewById(R.id.progress_bar)
         );
         catalog = ArtworkApplication.getComponent().getCatalog();
         glideRequests = ArtworkApplication.getComponent().getGldie();
@@ -48,14 +50,6 @@ public class AlbumInfoActivity extends AppCompatActivity implements LayoutManage
     protected void onResume() {
         super.onResume();
         catalog.addObserver(albumInfoPresenter);
-        int albumNum;
-        Bundle bundle = getIntent().getBundleExtra(AppResources.ALBUM_NUMBER_BUNDLE);
-        if(null != bundle){
-            albumNum = bundle.getInt(AppResources.ALBUM_NUMBER);
-            albumInfoPresenter.updateAlbumInfo(catalog.getAlbums().get(albumNum));
-        }else {
-            Log.d("AlbumInfoActivity", "NOOOOOO!");
-        }
     }
 
     @Override

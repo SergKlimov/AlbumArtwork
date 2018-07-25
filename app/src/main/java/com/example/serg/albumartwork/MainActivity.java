@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 
 import com.example.serg.albumartwork.Dagger.Component.CatalogPresComponent;
@@ -40,7 +41,8 @@ public class MainActivity extends AppCompatActivity implements LayoutManagerProv
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        catalogView = new CatalogView((RecyclerView)findViewById(R.id.albums_recycler));
+        catalogView = new CatalogView((RecyclerView)findViewById(R.id.albums_recycler),
+                (ProgressBar)findViewById(R.id.catalog_progress));
         catalog = ArtworkApplication.getComponent().getCatalog();
         glideRequests = ArtworkApplication.getComponent().getGldie();
         catalogPresComponent = DaggerCatalogPresComponent.builder()
@@ -79,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements LayoutManagerProv
     @Override
     protected void onNewIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())){
+            catalogPresenter.showProgress();
             String query = intent.getStringExtra(SearchManager.QUERY);
             Intent i = new Intent(this, iTunesAPIService.class);
             Bundle bundle = new Bundle();

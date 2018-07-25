@@ -46,8 +46,21 @@ public class CatalogPresenter implements ICatalogPresenter {
         if (null != o && o instanceof Catalog){
             Catalog catalog = (Catalog) o;
             Log.d("CatPres", "Update!");
+            hideProgress();
             updateCatalog(catalog);
         }
+    }
+
+    @Override
+    public void showProgress() {
+        catalogView.getAlbumsRecyclerView().setVisibility(View.INVISIBLE);
+        catalogView.getProgressBar().setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        catalogView.getProgressBar().setVisibility(View.INVISIBLE);
+        catalogView.getAlbumsRecyclerView().setVisibility(View.VISIBLE);
     }
 
     private static class AlbumsAdapter extends RecyclerView.Adapter<AlbumView> {

@@ -36,27 +36,36 @@ public class AlbumInfoPresenter implements IAlbumInfoPresenter {
 
     @Override
     public void updateAlbumInfo(Album album){
-        glideRequests.load(album.getCover())
-                .transform(new RoundedCornersTransformation(5,0))
-                .placeholder(R.drawable.album)
-                .into(albumInfoView.getCover());
+
         albumInfoView.getAlbumName().setText(album.getName());
         albumInfoView.getAlbumArtist().setText("Album by "+album.getArtist());
         //albumInfoView.getTracksCount().setText("tracks: " + album.getTrackList().size());
         albumInfoView.getAlbumGenre().setText(album.getGenre());
+        //albumInfoView.getProgressBar().setVisibility(View.INVISIBLE);
         //albumInfoView.getAlbumReleaseDate().setText(album.getReleaseDate().toString());
+        glideRequests.load(album.getCover())
+                .transform(new RoundedCornersTransformation(5,0))
+                .placeholder(R.drawable.album)
+                .fitCenter()
+                .into(albumInfoView.getCover());
         RecyclerView.LayoutManager layoutManager = provider.provideLayoutManger();
         albumInfoView.getTracksRecyclerView().setLayoutManager(layoutManager);
         albumInfoView.getTracksRecyclerView().setHasFixedSize(true);
         albumInfoView.getTracksRecyclerView().setAdapter(
                 new TracksAdapter(album)
         );
+        albumInfoView.getProgressBar().setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void update(Observable observable, Object o) {
         if (null != o && o instanceof Album){
             Album album = (Album) o;
+            Log.d("AlbumInfoPresenter", "Got album update!");
+            Log.d("AlbumInfoPresenter", album.getName());
+            Log.d("AlbumInfoPresenter", album.getArtist());
+            Log.d("AlbumInfoPresenter", album.getTracksCount()+"");
+            Log.d("AlbumInfoPresenter", album.getGenre());
             Log.d("AlbumInfoPresenter", "Got album update!");
             updateAlbumInfo(album);
         }

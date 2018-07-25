@@ -46,6 +46,7 @@ public class iTunesAPIService extends IntentService {
                 Bundle bundle = intent.getBundleExtra(AppResources.INTENT_BUNDLE);
                 if(bundle.getString(AppResources.SERVICE_CMD).equals(AppResources.SERVICE_SEARCH_ALBUM)){
                     String query = bundle.getString(AppResources.SEARCH_QUERY);
+
                     String encodedQuery = null;
                     try {
                         encodedQuery = URLEncoder.encode(query, "utf-8");
@@ -58,7 +59,6 @@ public class iTunesAPIService extends IntentService {
                             searchQuery, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            Toast.makeText(iTunesAPIService.this, response.substring(0, 30), Toast.LENGTH_SHORT).show();
                             Log.d("Intent", response);
                             catalog.setCatalog(JsonParser.parse(response));
                         }
