@@ -15,7 +15,9 @@
 
         <activity android:name=".MainActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -30,6 +32,7 @@
         <activity
             android:name=".AlbumInfoActivity"
             android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
             />
 
         <service android:name=".iTunesAPI.iTunesAPIService"/>
