@@ -6,6 +6,12 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/icons8_itunes"
+            />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,6 +25,7 @@
             android:layout_weight="1"
             android:layout_margin="5dp"
             android:orientation="horizontal"
+            android:background="#50FFFFFF"
             >
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/album_cover"

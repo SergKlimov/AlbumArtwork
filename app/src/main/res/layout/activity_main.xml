@@ -10,6 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/icons8_itunes"
+            />
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/albums_recycler"
             android:layout_width="match_parent"
