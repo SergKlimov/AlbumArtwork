@@ -8,6 +8,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -35,6 +36,8 @@ public class AlbumInfoActivity extends AppCompatActivity implements LayoutManage
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_album_info);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         albumInfoView = new AlbumInfoView(
                 (AppCompatTextView)findViewById(R.id.album_name),
                 (AppCompatTextView)findViewById(R.id.album_artist),

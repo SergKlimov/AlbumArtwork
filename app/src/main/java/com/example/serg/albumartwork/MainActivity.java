@@ -41,7 +41,8 @@ public class MainActivity extends AppCompatActivity implements LayoutManagerProv
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.drawable.icons8_itunes);
         catalogView = new CatalogView((RecyclerView)findViewById(R.id.albums_recycler),
                 (ProgressBar)findViewById(R.id.catalog_progress),
                 (AppCompatTextView)findViewById(R.id.not_found));

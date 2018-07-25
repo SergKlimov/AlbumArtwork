@@ -27,7 +27,10 @@
 
         </activity>
 
-        <activity android:name=".AlbumInfoActivity"/>
+        <activity
+            android:name=".AlbumInfoActivity"
+            android:parentActivityName=".MainActivity"
+            />
 
         <service android:name=".iTunesAPI.iTunesAPIService"/>
 
