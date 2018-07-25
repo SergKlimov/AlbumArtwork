@@ -36,12 +36,13 @@ public class JsonParser {
                     String timeStamp = album.getString("releaseDate");
 
                     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-                    int year = 2018;
+                    //int year = 2018;
+                    Date date = new Date();
                     try {
-                        Date date = format.parse(timeStamp);
-                        Calendar calendar = new GregorianCalendar();
+                        date = format.parse(timeStamp);
+                        /*Calendar calendar = new GregorianCalendar();
                         calendar.setTime(date);
-                        year = calendar.get(Calendar.YEAR);
+                        year = calendar.get(Calendar.YEAR);*/
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
@@ -49,7 +50,7 @@ public class JsonParser {
                     albums.add(new Album(album.getString("collectionName"),
                             album.getString("artworkUrl100"),
                             //album.getString("releaseDate"),
-                            String.valueOf(year),
+                            date,
                             album.getString("primaryGenreName"),
                             album.getString("artistName"),
                             new ArrayList<Track>(album.getInt("trackCount")),
@@ -107,7 +108,7 @@ public class JsonParser {
     public static void printAlbum(Album album){
         Log.d("Print:", album.getName());
         Log.d("Print:", album.getCover());
-        Log.d("Print:", album.getReleaseDate());
+        Log.d("Print:", album.getReleaseDate().toString());
         Log.d("Print:", album.getGenre());
         Log.d("Print:", album.getArtist());
         Log.d("Print:", ""+album.getTrackList().size());

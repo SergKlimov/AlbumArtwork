@@ -1,6 +1,5 @@
 package com.example.serg.albumartwork.View;
 
-import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -10,14 +9,14 @@ public class TrackView extends RecyclerView.ViewHolder implements ITrackView {
     private TextView artistName;
     private TextView trackName;
     //private AppCompatImageView cover;
-    private TextView durationMillis;
+    private TextView duration;
 
-    public TrackView(View itemView, TextView artistName, TextView trackName, /*AppCompatImageView cover,*/ TextView durationMillis) {
+    public TrackView(View itemView, TextView artistName, TextView trackName, /*AppCompatImageView cover,*/ TextView duration) {
         super(itemView);
         this.artistName = artistName;
         this.trackName = trackName;
         //this.cover = cover;
-        this.durationMillis = durationMillis;
+        this.duration = duration;
     }
 
     @Override
@@ -31,7 +30,7 @@ public class TrackView extends RecyclerView.ViewHolder implements ITrackView {
     }
 
     @Override
-    public void setDurationMillis(int durationMillis) {
-        this.durationMillis.setText(String.valueOf(durationMillis));
+    public void setDuration(String duration) {
+        this.duration.setText(duration);
     }
 }

@@ -16,7 +16,10 @@ import com.example.serg.albumartwork.Model.Catalog;
 import com.example.serg.albumartwork.Model.Track;
 import com.example.serg.albumartwork.iTunesAPI.iTunesAPIService;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -56,12 +59,20 @@ public class ArtworkApplication extends Application/* implements AlbumClicked */
 
     private Catalog generateCatalog(){
         int n = 20;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        try {
+            date = format.parse("2018-10-10");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         List<Album> albums = new ArrayList<>(n);
         for(int i=0;i<n;i++){
             albums.add(i,
                     new Album("Album "+i,
                             ""+i,
-                            "2018",
+                            date,
                             "Rock",
                             "serg", new ArrayList<Track>(2),
                             10,

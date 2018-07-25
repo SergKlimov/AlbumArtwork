@@ -1,6 +1,7 @@
 package com.example.serg.albumartwork.Presenter;
 
 import com.example.serg.albumartwork.Model.Track;
+import com.example.serg.albumartwork.Utils.MillisecParser;
 import com.example.serg.albumartwork.View.ITrackView;
 
 public class TrackPresenter implements ITrackPresenter {
@@ -16,7 +17,7 @@ public class TrackPresenter implements ITrackPresenter {
         if (!track.equals(null)){
             trackView.setArtistName(track.getArtistName());
             trackView.setTrackName(track.getTrackName());
-            trackView.setDurationMillis(track.getDurationMillis());
+            trackView.setDuration(MillisecParser.getString(track.getDurationMillis()));
         }
     }
 }

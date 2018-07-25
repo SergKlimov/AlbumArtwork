@@ -7,19 +7,70 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:weightSum="6"
         >
 
-        <android.support.v7.widget.AppCompatImageView
-            android:id="@+id/album_cover"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:orientation="horizontal"
+            >
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/album_cover"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center|left"
+                android:layout_margin="5dp"
+                >
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/album_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Album Name"
+                    android:textColor="@android:color/black"
+                    android:textSize="16dp"
+                    />
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/album_artist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Artist"
+                    />
+                <!--<android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/album_tracks_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="tracks: 15"
+                    />-->
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/album_genre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rock"
+                    />
+                <!--<android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/album_release_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="05/10/2018"
+                    />-->
+            </LinearLayout>
+        </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/tracks_recycler"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            >
         </android.support.v7.widget.RecyclerView>
 
     </LinearLayout>

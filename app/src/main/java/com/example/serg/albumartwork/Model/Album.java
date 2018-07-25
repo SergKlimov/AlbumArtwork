@@ -1,12 +1,13 @@
 package com.example.serg.albumartwork.Model;
 
+import java.util.Date;
 import java.util.List;
 
 public class Album {
 
     private String name;
     private String cover;
-    private String releaseDate;
+    private Date releaseDate;
     private String genre;
     private String artist;
     private List<Track> trackList;
@@ -29,7 +30,7 @@ public class Album {
         this.tracksCount = tracksCount;
     }
 
-    public Album(String name, String cover, String releaseDate, String genre, String artist, List<Track> trackList, int tracksCount, int iTunesId) {
+    public Album(String name, String cover, Date releaseDate, String genre, String artist, List<Track> trackList, int tracksCount, int iTunesId) {
         this.name = name;
         this.cover = cover;
         this.releaseDate = releaseDate;
@@ -56,11 +57,11 @@ public class Album {
         this.cover = cover;
     }
 
-    public String getReleaseDate() {
+    public Date getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(String releaseDate) {
+    public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
     }
 

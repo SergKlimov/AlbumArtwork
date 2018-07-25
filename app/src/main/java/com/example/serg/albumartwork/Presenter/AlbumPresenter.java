@@ -11,6 +11,10 @@ import com.example.serg.albumartwork.Model.Album;
 import com.example.serg.albumartwork.R;
 import com.example.serg.albumartwork.View.IAlbumView;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 import javax.inject.Inject;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
@@ -33,7 +37,12 @@ public class AlbumPresenter implements IAlbumPresenter {
                     .placeholder(R.drawable.album)
                     .into(albumView.getCover());
             albumView.setName(album.getName());
-            albumView.setYear(album.getReleaseDate());
+
+            Calendar calendar = new GregorianCalendar();
+            calendar.setTime(album.getReleaseDate());
+            //int year = calendar.get(Calendar.YEAR);
+
+            albumView.setYear("Year: " + String.valueOf(calendar.get(Calendar.YEAR)));
             albumView.setTracksCount(String.valueOf(album.getTracksCount()));
             RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) albumView;
             viewHolder.itemView.setOnClickListener(clickListener);

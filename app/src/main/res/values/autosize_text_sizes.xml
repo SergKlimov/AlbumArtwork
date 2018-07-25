@@ -3,5 +3,6 @@
     <array name="autosize_text_sizes">
         <item>18dp</item>
         <item>14dp</item>
+        <item>10dp</item>
     </array>
 </resources>
