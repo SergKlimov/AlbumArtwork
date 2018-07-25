@@ -7,7 +7,7 @@
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:layout_marginBottom="@dimen/cardMarginVertical"
         android:layout_marginLeft="@dimen/cardMarginHorizontal"
         android:layout_marginRight="@dimen/cardMarginHorizontal"
@@ -19,31 +19,48 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/cover"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_margin="10dp"
-                />
-
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/albumName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="Album Name"
-                android:textColor="@android:color/black"
-                android:textSize="20dp" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="6"
+            >
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0"
-                android:gravity="right"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:layout_weight="5"
+                >
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/cover"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_margin="10dp"
+                    android:layout_gravity="center"
+                    />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/albumName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:text="Album Name"
+                    android:textColor="@android:color/black"
+                    android:textSize="18dp"
+                    android:gravity="center|left"
+                    app:autoSizeTextType="uniform"
+                    app:autoSizePresetSizes="@array/autosize_text_sizes"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="right|center"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                >
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/albumYear"
@@ -52,7 +69,7 @@
                     android:layout_margin="5dp"
                     android:text="2018"
                     android:textColor="@android:color/black"
-                    android:textSize="10dp" />
+                    android:textSize="12dp" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/tracksCount"

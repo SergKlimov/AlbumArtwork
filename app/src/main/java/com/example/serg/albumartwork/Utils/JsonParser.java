@@ -1,6 +1,5 @@
 package com.example.serg.albumartwork.Utils;
 
-import android.util.JsonReader;
 import android.util.Log;
 
 import com.example.serg.albumartwork.Model.Album;
@@ -11,9 +10,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class JsonParser {
@@ -28,9 +32,24 @@ public class JsonParser {
                 JSONArray jsonAlbums = response.getJSONArray("results");
                 for (int i = 0; i < albumsCount; i++){
                     JSONObject album = jsonAlbums.getJSONObject(i);
+
+                    String timeStamp = album.getString("releaseDate");
+
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+                    int year = 2018;
+                    try {
+                        Date date = format.parse(timeStamp);
+                        Calendar calendar = new GregorianCalendar();
+                        calendar.setTime(date);
+                        year = calendar.get(Calendar.YEAR);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
                     albums.add(new Album(album.getString("collectionName"),
                             album.getString("artworkUrl100"),
-                            album.getString("releaseDate"),
+                            //album.getString("releaseDate"),
+                            String.valueOf(year),
                             album.getString("primaryGenreName"),
                             album.getString("artistName"),
                             new ArrayList<Track>(album.getInt("trackCount")),

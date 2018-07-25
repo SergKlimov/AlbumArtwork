@@ -32,7 +32,7 @@ public class AlbumView extends RecyclerView.ViewHolder implements IAlbumView {
 
     @Override
     public void setTracksCount(String tracksCount) {
-        this.tracksCount.setText(tracksCount);
+        this.tracksCount.setText("tracks: " + tracksCount);
     }
 
     @Override
