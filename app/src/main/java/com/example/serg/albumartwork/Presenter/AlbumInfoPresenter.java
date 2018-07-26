@@ -3,22 +3,17 @@ package com.example.serg.albumartwork.Presenter;
 import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.ImageViewTargetFactory;
-import com.bumptech.glide.request.target.Target;
 import com.example.serg.albumartwork.ArtworkApplication;
 import com.example.serg.albumartwork.Dagger.Module.GlideRequests;
 import com.example.serg.albumartwork.LayoutManagerProvider;
 import com.example.serg.albumartwork.Model.Album;
 import com.example.serg.albumartwork.Model.AlbumState;
-import com.example.serg.albumartwork.Model.Catalog;
 import com.example.serg.albumartwork.R;
 import com.example.serg.albumartwork.View.IAlbumInfoView;
 import com.example.serg.albumartwork.View.TrackView;
@@ -98,15 +93,12 @@ public class AlbumInfoPresenter implements IAlbumInfoPresenter {
         @NonNull
         @Override
         public TrackView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = null;
-            TrackView trackView = null;
-            view = LayoutInflater.from(parent.getContext())
+            View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.track_info, parent, false);
-            trackView = new TrackView(view,
+            return new TrackView(view,
                     (TextView)view.findViewById(R.id.track_artist),
                     (TextView)view.findViewById(R.id.track_name),
                     (TextView)view.findViewById(R.id.track_duration));
-            return trackView;
         }
 
         @Override

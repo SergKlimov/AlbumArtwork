@@ -7,17 +7,13 @@ import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.MenuItem;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.example.serg.albumartwork.Dagger.Component.AlbumInfoPresenterComponent;
+
 import com.example.serg.albumartwork.Dagger.Component.DaggerAlbumInfoPresenterComponent;
 import com.example.serg.albumartwork.Dagger.Module.AlbumInfoPresenterModule;
-import com.example.serg.albumartwork.Dagger.Module.GlideRequests;
 import com.example.serg.albumartwork.Model.Catalog;
-import com.example.serg.albumartwork.Presenter.AlbumInfoPresenter;
 import com.example.serg.albumartwork.Presenter.IAlbumInfoPresenter;
 import com.example.serg.albumartwork.View.AlbumInfoView;
 import com.example.serg.albumartwork.View.IAlbumInfoView;

@@ -16,7 +16,7 @@
         app:cardElevation="2dp"
         app:cardPreventCornerOverlap="false"
         app:contentPadding="0dp"
-        app:cardBackgroundColor="#70FFFFFF"
+        app:cardBackgroundColor="@color/cardTransparent"
         >
 
         <LinearLayout
@@ -37,16 +37,16 @@
                     android:id="@+id/track_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Track Name"
+                    android:text="@string/sample_track"
                     android:textColor="@android:color/black"
-                    android:textSize="15dp" />
+                    android:textSize="15sp" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/track_artist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Artist"
-                    android:textSize="10dp" />
+                    android:text="@string/sample_artist"
+                    android:textSize="10sp" />
 
             </LinearLayout>
 
@@ -55,11 +55,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:text="5:24"
-                    android:textSize="10dp"
+                    android:text="@string/sample_duration"
+                    android:textSize="10sp"
                     android:layout_weight="1"
                     android:layout_gravity="center"
-                    android:gravity="right"
+                    android:gravity="end"
                     />
 
         </LinearLayout>

@@ -5,9 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,7 +21,6 @@ import com.example.serg.albumartwork.Dagger.Component.DaggerCatalogPresComponent
 import com.example.serg.albumartwork.Dagger.Module.CatalogPresModule;
 import com.example.serg.albumartwork.Dagger.Module.GlideRequests;
 import com.example.serg.albumartwork.Model.Catalog;
-import com.example.serg.albumartwork.Presenter.CatalogPresenter;
 import com.example.serg.albumartwork.Presenter.ICatalogPresenter;
 import com.example.serg.albumartwork.View.CatalogView;
 import com.example.serg.albumartwork.View.ICatalogView;
@@ -41,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements LayoutManagerProv
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("MainActivity", "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -90,7 +86,8 @@ public class MainActivity extends AppCompatActivity implements LayoutManagerProv
 
     @Override
     protected void onNewIntent(Intent intent) {
-        if (Intent.ACTION_SEARCH.equals(intent.getAction()) && ArtworkApplication.getComponent().getConnectionStatus()){
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())
+                && ArtworkApplication.getComponent().getConnectionStatus()){
             catalogPresenter.showProgress();
             String query = intent.getStringExtra(SearchManager.QUERY);
             Intent i = new Intent(this, iTunesAPIService.class);
@@ -99,7 +96,6 @@ public class MainActivity extends AppCompatActivity implements LayoutManagerProv
             bundle.putString(AppResources.SERVICE_CMD, AppResources.SERVICE_SEARCH_ALBUM);
             i.putExtra(AppResources.INTENT_BUNDLE, bundle);
             startService(i);
-            Log.d("Deb", "intent started!");
         } else if (!ArtworkApplication.getComponent().getConnectionStatus()){
             catalogPresenter.showNoInternetSnack();
         }
@@ -112,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements LayoutManagerProv
 
     @Override
     public View.OnClickListener showAlbumInfo() {
-        View.OnClickListener clickListener = new View.OnClickListener() {
+        return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(ArtworkApplication.getComponent().getConnectionStatus()){
@@ -134,6 +130,5 @@ public class MainActivity extends AppCompatActivity implements LayoutManagerProv
                 }
             }
         };
-        return clickListener;
     }
 }

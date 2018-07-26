@@ -8,14 +8,12 @@ public class TrackView extends RecyclerView.ViewHolder implements ITrackView {
 
     private TextView artistName;
     private TextView trackName;
-    //private AppCompatImageView cover;
     private TextView duration;
 
-    public TrackView(View itemView, TextView artistName, TextView trackName, /*AppCompatImageView cover,*/ TextView duration) {
+    public TrackView(View itemView, TextView artistName, TextView trackName, TextView duration) {
         super(itemView);
         this.artistName = artistName;
         this.trackName = trackName;
-        //this.cover = cover;
         this.duration = duration;
     }
 

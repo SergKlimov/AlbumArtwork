@@ -3,4 +3,13 @@
     <string name="title_activity_main2">Main2Activity</string>
     <string name="search_hint">Search by artist</string>
     <string name="no_connection">No internet connection!</string>
+    <string name="nothing_found">Sorry, nothing found! =(</string>
+    <string name="sample_album">Album</string>
+    <string name="sample_artist">Artist</string>
+    <string name="sample_genre">Genre</string>
+    <string name="sample_year">Year: 2018</string>
+    <string name="sample_tracks">23 tracks</string>
+    <string name="sample_track">Track Name</string>
+    <string name="sample_duration">5:24</string>
+    <string name="search">Search</string>
 </resources>

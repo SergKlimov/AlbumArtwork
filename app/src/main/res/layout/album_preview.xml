@@ -17,7 +17,7 @@
         app:cardElevation="2dp"
         app:cardPreventCornerOverlap="false"
         app:contentPadding="0dp"
-        app:cardBackgroundColor="#70FFFFFF"
+        app:cardBackgroundColor="@color/cardTransparent"
         >
 
         <LinearLayout
@@ -25,7 +25,7 @@
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:weightSum="10"
-            >
+            android:baselineAligned="false">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -47,10 +47,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
-                    android:text="Album Name"
+                    android:text="@string/sample_album"
                     android:textColor="@android:color/black"
-                    android:textSize="18dp"
-                    android:gravity="center|left"
+                    android:textSize="18sp"
+                    android:gravity="center|start"
                     app:autoSizeTextType="uniform"
                     app:autoSizePresetSizes="@array/autosize_text_sizes"
                     />
@@ -60,7 +60,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:gravity="right|center"
+                android:gravity="end|center"
                 android:orientation="vertical"
                 android:layout_weight="2"
                 >
@@ -70,18 +70,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:text="Year: 2018"
+                    android:text="@string/sample_year"
                     android:textColor="@android:color/black"
-                    android:textSize="12dp" />
+                    android:textSize="12sp" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/tracksCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:text="23 tracks"
+                    android:text="@string/sample_tracks"
                     android:textColor="@android:color/black"
-                    android:textSize="10dp" />
+                    android:textSize="10sp" />
             </LinearLayout>
         </LinearLayout>
 

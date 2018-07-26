@@ -7,6 +7,5 @@ public interface IAlbumView {
     void setYear(String year);
     void setTracksCount(String tracksCount);
     AppCompatImageView getCover();
-
     IAlbumView getInstance();
 }

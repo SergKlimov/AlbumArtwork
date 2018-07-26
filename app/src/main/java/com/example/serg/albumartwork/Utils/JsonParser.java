@@ -13,12 +13,11 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 public class JsonParser {
 
@@ -32,24 +31,16 @@ public class JsonParser {
                 JSONArray jsonAlbums = response.getJSONArray("results");
                 for (int i = 0; i < albumsCount; i++){
                     JSONObject album = jsonAlbums.getJSONObject(i);
-
                     String timeStamp = album.getString("releaseDate");
-
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-                    //int year = 2018;
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
                     Date date = new Date();
                     try {
                         date = format.parse(timeStamp);
-                        /*Calendar calendar = new GregorianCalendar();
-                        calendar.setTime(date);
-                        year = calendar.get(Calendar.YEAR);*/
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-
                     albums.add(new Album(album.getString("collectionName"),
                             album.getString("artworkUrl100"),
-                            //album.getString("releaseDate"),
                             date,
                             album.getString("primaryGenreName"),
                             album.getString("artistName"),
@@ -82,7 +73,6 @@ public class JsonParser {
             try {
                 JSONObject response = new JSONObject(responseResult);
                 JSONArray jsonTracks = response.getJSONArray("results");
-                //for (int i = 1; i < album.getTracksCount() + 1; i++){
                 for (int i = 1; i < response.getInt("resultCount"); i++){
                     JSONObject jsonTrack = jsonTracks.getJSONObject(i);
                     tracks.add(new Track(jsonTrack.getString("artistName"),
@@ -95,22 +85,5 @@ public class JsonParser {
                 e.printStackTrace();
             }
         }
-    }
-
-    public static void printAlbumTracks(Album album){
-        for (int i = 0; i < album.getTrackList().size(); i++){
-            Log.d("Print track:", "-----------");
-            Log.d("Print track:", album.getTrackList().get(i).getTrackName());
-            Log.d("Print track:", "-----------");
-        }
-    }
-
-    public static void printAlbum(Album album){
-        Log.d("Print:", album.getName());
-        Log.d("Print:", album.getCover());
-        Log.d("Print:", album.getReleaseDate().toString());
-        Log.d("Print:", album.getGenre());
-        Log.d("Print:", album.getArtist());
-        Log.d("Print:", ""+album.getTrackList().size());
     }
 }

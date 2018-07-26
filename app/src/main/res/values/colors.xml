@@ -6,4 +6,6 @@
     <color name="colorPrimary">#8c9eff</color>
     <color name="colorPrimaryDark">#8c9eff</color>
     <color name="colorAccent">#ff8a80</color>
+    <color name="myTransparent">#50FFFFFF</color>
+    <color name="cardTransparent">#70FFFFFF</color>
 </resources>

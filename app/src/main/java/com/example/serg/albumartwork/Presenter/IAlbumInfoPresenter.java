@@ -5,5 +5,5 @@ import com.example.serg.albumartwork.Model.Album;
 import java.util.Observer;
 
 public interface IAlbumInfoPresenter extends Observer{
-    public void updateAlbumInfo(Album album);
+    void updateAlbumInfo(Album album);
 }

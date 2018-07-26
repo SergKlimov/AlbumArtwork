@@ -9,28 +9,19 @@ public class AlbumInfoView implements IAlbumInfoView {
 
     private AppCompatTextView albumName;
     private AppCompatTextView albumArtist;
-    //private AppCompatTextView tracksCount;
     private AppCompatTextView albumGenre;
-    //private AppCompatTextView albumReleaseDate;
     private AppCompatImageView cover;
     private RecyclerView tracksRecyclerView;
     private ProgressBar progressBar;
 
-    public AlbumInfoView(AppCompatTextView albumName, AppCompatTextView albumArtist, /*AppCompatTextView tracksCount,*/ AppCompatTextView albumGenre, /*AppCompatTextView albumReleaseDate,*/ AppCompatImageView cover, RecyclerView tracksRecyclerView, ProgressBar progressBar) {
+    public AlbumInfoView(AppCompatTextView albumName, AppCompatTextView albumArtist, AppCompatTextView albumGenre, AppCompatImageView cover, RecyclerView tracksRecyclerView, ProgressBar progressBar) {
         this.albumName = albumName;
         this.albumArtist = albumArtist;
-        //this.tracksCount = tracksCount;
         this.albumGenre = albumGenre;
-        //this.albumReleaseDate = albumReleaseDate;
         this.cover = cover;
         this.tracksRecyclerView = tracksRecyclerView;
         this.progressBar = progressBar;
     }
-
-    /*public AlbumInfoView(AppCompatImageView cover, RecyclerView tracksRecyclerView) {
-        this.cover = cover;
-        this.tracksRecyclerView = tracksRecyclerView;
-    }*/
 
     @Override
     public ProgressBar getProgressBar() {
@@ -59,15 +50,6 @@ public class AlbumInfoView implements IAlbumInfoView {
         this.albumArtist = albumArtist;
     }
 
-    /*@Override
-    public AppCompatTextView getTracksCount() {
-        return tracksCount;
-    }
-
-    public void setTracksCount(AppCompatTextView tracksCount) {
-        this.tracksCount = tracksCount;
-    }*/
-
     @Override
     public AppCompatTextView getAlbumGenre() {
         return albumGenre;
@@ -76,15 +58,6 @@ public class AlbumInfoView implements IAlbumInfoView {
     public void setAlbumGenre(AppCompatTextView albumGenre) {
         this.albumGenre = albumGenre;
     }
-
-    /*@Override
-    public AppCompatTextView getAlbumReleaseDate() {
-        return albumReleaseDate;
-    }
-
-    public void setAlbumReleaseDate(AppCompatTextView albumReleaseDate) {
-        this.albumReleaseDate = albumReleaseDate;
-    }*/
 
     @Override
     public RecyclerView getTracksRecyclerView() {

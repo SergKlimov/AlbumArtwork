@@ -15,7 +15,6 @@ import com.example.serg.albumartwork.Model.Album;
 import com.example.serg.albumartwork.Model.Catalog;
 import com.example.serg.albumartwork.R;
 import com.example.serg.albumartwork.View.AlbumView;
-import com.example.serg.albumartwork.View.IAlbumView;
 import com.example.serg.albumartwork.View.ICatalogView;
 
 import java.util.List;
@@ -92,17 +91,14 @@ public class CatalogPresenter implements ICatalogPresenter {
 
         @Override
         public AlbumView onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = null;
-            AlbumView albumView = null;
-            view = LayoutInflater.from(parent.getContext())
+            View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.album_preview, parent, false);
-            albumView = new AlbumView(view,
+            return new AlbumView(view,
                     (TextView)view.findViewById(R.id.albumName),
                     (TextView)view.findViewById(R.id.albumYear),
                     (TextView)view.findViewById(R.id.tracksCount),
                     (AppCompatImageView)view.findViewById(R.id.cover)
                     );
-            return albumView;
         }
 
         @Override

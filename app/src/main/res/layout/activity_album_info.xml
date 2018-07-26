@@ -24,7 +24,7 @@
             android:layout_height="0dp"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            android:background="#50FFFFFF"
+            android:background="@color/myTransparent"
             android:orientation="horizontal">
 
             <android.support.v7.widget.AppCompatImageView
@@ -40,29 +40,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:gravity="center|left"
+                android:gravity="center|start"
                 android:orientation="vertical">
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/album_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Album"
+                    android:text="@string/sample_album"
                     android:textColor="@android:color/black"
-                    android:textSize="16dp" />
+                    android:textSize="16sp" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/album_artist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Artist"
+                    android:text="@string/sample_artist"
                     />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/album_genre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="genre"
+                    android:text="@string/sample_genre"
                     />
             </LinearLayout>
         </LinearLayout>

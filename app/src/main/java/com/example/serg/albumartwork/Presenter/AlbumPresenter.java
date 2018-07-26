@@ -3,8 +3,6 @@ package com.example.serg.albumartwork.Presenter;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.example.serg.albumartwork.AlbumClicked;
 import com.example.serg.albumartwork.ArtworkApplication;
 import com.example.serg.albumartwork.Dagger.Module.GlideRequests;
 import com.example.serg.albumartwork.Model.Album;
@@ -12,7 +10,6 @@ import com.example.serg.albumartwork.R;
 import com.example.serg.albumartwork.View.IAlbumView;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 import javax.inject.Inject;
@@ -40,7 +37,6 @@ public class AlbumPresenter implements IAlbumPresenter {
 
             Calendar calendar = new GregorianCalendar();
             calendar.setTime(album.getReleaseDate());
-            //int year = calendar.get(Calendar.YEAR);
 
             albumView.setYear("Year: " + String.valueOf(calendar.get(Calendar.YEAR)));
             albumView.setTracksCount(String.valueOf(album.getTracksCount()));

@@ -6,6 +6,9 @@ public class AppResources {
     public static final String ALBUM_NUMBER = "albumNum";
     public static final String ALBUM_NUMBER_BUNDLE = "albumNumBundle";
     public static final String SERVICE_CMD = "CMD";
-    public static final String SERVICE_SEARCH_ALBUM = "searchAlbum";
-    public static final String SERVICE_GET_TRACKS = "getTracks";
+    public static final String SERVICE_SEARCH_ALBUM = "SEARCH_ALBUM";
+    public static final String SERVICE_GET_TRACKS = "GET_TRACKS";
+
+    public static final String APIURL = "https://itunes.apple.com/search?";
+    public static final String LOOKUP_APIURL = "https://itunes.apple.com/lookup?";
 }

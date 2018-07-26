@@ -1,7 +1,6 @@
 package com.example.serg.albumartwork.Dagger.Module;
 
 import android.app.Application;
-import android.view.View;
 
 import com.example.serg.albumartwork.ArtworkApplication;
 import com.example.serg.albumartwork.Dagger.Scope.PerApp;
