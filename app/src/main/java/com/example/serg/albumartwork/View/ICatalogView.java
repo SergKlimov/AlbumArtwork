@@ -1,5 +1,6 @@
 package com.example.serg.albumartwork.View;
 
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.widget.LinearLayout;
@@ -11,4 +12,5 @@ public interface ICatalogView {
     public RecyclerView getAlbumsRecyclerView();
     public ProgressBar getProgressBar();
     public AppCompatTextView getNothingFound();
+    public CoordinatorLayout getMainLayout();
 }

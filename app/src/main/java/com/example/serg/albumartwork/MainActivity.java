@@ -4,6 +4,8 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
@@ -46,7 +48,8 @@ public class MainActivity extends AppCompatActivity implements LayoutManagerProv
         getSupportActionBar().setIcon(R.drawable.icons8_itunes);
         catalogView = new CatalogView((RecyclerView)findViewById(R.id.albums_recycler),
                 (ProgressBar)findViewById(R.id.catalog_progress),
-                (AppCompatTextView)findViewById(R.id.not_found));
+                (AppCompatTextView)findViewById(R.id.not_found),
+                (CoordinatorLayout)findViewById(R.id.main_layout));
         catalog = ArtworkApplication.getComponent().getCatalog();
         glideRequests = ArtworkApplication.getComponent().getGldie();
         catalogPresComponent = DaggerCatalogPresComponent.builder()
@@ -87,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements LayoutManagerProv
 
     @Override
     protected void onNewIntent(Intent intent) {
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())){
+        if (Intent.ACTION_SEARCH.equals(intent.getAction()) && ArtworkApplication.getComponent().getConnectionStatus()){
             catalogPresenter.showProgress();
             String query = intent.getStringExtra(SearchManager.QUERY);
             Intent i = new Intent(this, iTunesAPIService.class);
@@ -97,6 +100,8 @@ public class MainActivity extends AppCompatActivity implements LayoutManagerProv
             i.putExtra(AppResources.INTENT_BUNDLE, bundle);
             startService(i);
             Log.d("Deb", "intent started!");
+        } else if (!ArtworkApplication.getComponent().getConnectionStatus()){
+            catalogPresenter.showNoInternetSnack();
         }
     }
 
@@ -110,19 +115,23 @@ public class MainActivity extends AppCompatActivity implements LayoutManagerProv
         View.OnClickListener clickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int albumNum = (int) view.getTag(R.integer.albumNum);
-                Intent i = new Intent(getApplicationContext(), iTunesAPIService.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt(AppResources.ALBUM_NUMBER, albumNum);
-                bundle.putString(AppResources.SERVICE_CMD, AppResources.SERVICE_GET_TRACKS);
-                i.putExtra(AppResources.INTENT_BUNDLE, bundle);
-                startService(i);
+                if(ArtworkApplication.getComponent().getConnectionStatus()){
+                    int albumNum = (int) view.getTag(R.integer.albumNum);
+                    Intent i = new Intent(getApplicationContext(), iTunesAPIService.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(AppResources.ALBUM_NUMBER, albumNum);
+                    bundle.putString(AppResources.SERVICE_CMD, AppResources.SERVICE_GET_TRACKS);
+                    i.putExtra(AppResources.INTENT_BUNDLE, bundle);
+                    startService(i);
 
-                Intent showAlbumInfo = new Intent(MainActivity.this, AlbumInfoActivity.class);
-                Bundle b = new Bundle();
-                b.putInt(AppResources.ALBUM_NUMBER, albumNum);
-                showAlbumInfo.putExtra(AppResources.ALBUM_NUMBER_BUNDLE, b);
-                startActivity(showAlbumInfo);
+                    Intent showAlbumInfo = new Intent(MainActivity.this, AlbumInfoActivity.class);
+                    Bundle b = new Bundle();
+                    b.putInt(AppResources.ALBUM_NUMBER, albumNum);
+                    showAlbumInfo.putExtra(AppResources.ALBUM_NUMBER_BUNDLE, b);
+                    startActivity(showAlbumInfo);
+                }else {
+                    catalogPresenter.showNoInternetSnack();
+                }
             }
         };
         return clickListener;

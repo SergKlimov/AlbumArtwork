@@ -1,5 +1,6 @@
 package com.example.serg.albumartwork.Presenter;
 
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -37,7 +38,6 @@ public class CatalogPresenter implements ICatalogPresenter {
         if(catalog.getAlbums() != null) {
             if (catalog.getAlbums().size() != 0) {
                 catalogView.getNothingFound().setVisibility(View.INVISIBLE);
-                //updateCatalog(catalog);
                 RecyclerView.LayoutManager layoutManager = provider.provideLayoutManger();
                 catalogView.getAlbumsRecyclerView().setLayoutManager(layoutManager);
                 catalogView.getAlbumsRecyclerView().setHasFixedSize(true);
@@ -57,13 +57,6 @@ public class CatalogPresenter implements ICatalogPresenter {
             Log.d("CatPres", "Update!");
             hideProgress();
             updateCatalog(catalog);
-            /*if(catalog.getAlbums().size() != 0) {
-                catalogView.getNothingFound().setVisibility(View.INVISIBLE);
-                updateCatalog(catalog);
-            } else{
-                catalogView.getNothingFound().setVisibility(View.VISIBLE);
-                catalogView.getAlbumsRecyclerView().setVisibility(View.INVISIBLE);
-            }*/
         }
     }
 
@@ -77,6 +70,14 @@ public class CatalogPresenter implements ICatalogPresenter {
     public void hideProgress() {
         catalogView.getProgressBar().setVisibility(View.INVISIBLE);
         catalogView.getAlbumsRecyclerView().setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showNoInternetSnack() {
+        Snackbar.make(catalogView.getMainLayout(),
+                R.string.no_connection,
+                Snackbar.LENGTH_SHORT)
+                .show();
     }
 
     private static class AlbumsAdapter extends RecyclerView.Adapter<AlbumView> {
@@ -106,9 +107,8 @@ public class CatalogPresenter implements ICatalogPresenter {
 
         @Override
         public void onBindViewHolder(AlbumView holder, int position) {
-            RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) holder;
-            viewHolder.itemView.setTag(R.integer.albumNum, position);
-            IAlbumPresenter albumPresenter = new AlbumPresenter((IAlbumView) viewHolder/*, albumClicked*/);
+            holder.itemView.setTag(R.integer.albumNum, position);
+            IAlbumPresenter albumPresenter = new AlbumPresenter(holder);
             albumPresenter.updateAlbum(albums.get(position), albumClicked.showAlbumInfo());
             Log.d("bindView", "pos: " + position);
         }

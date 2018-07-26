@@ -10,4 +10,5 @@ public interface ICatalogPresenter extends Observer {
     public void updateCatalog(Catalog catalog);
     public void showProgress();
     public void hideProgress();
+    public void showNoInternetSnack();
 }

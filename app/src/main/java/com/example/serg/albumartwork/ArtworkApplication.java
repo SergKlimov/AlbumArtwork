@@ -1,11 +1,17 @@
 package com.example.serg.albumartwork;
 
 import android.app.Application;
+import android.app.usage.NetworkStats;
+import android.app.usage.NetworkStatsManager;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.NetworkRequest;
 import android.os.Bundle;
 import android.view.View;
 
+import com.android.volley.NetworkDispatcher;
 import com.example.serg.albumartwork.Dagger.Component.DaggerMainComponent;
 import com.example.serg.albumartwork.Dagger.Component.MainComponent;
 import com.example.serg.albumartwork.Dagger.Module.GlideApp;
@@ -24,7 +30,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class ArtworkApplication extends Application/* implements AlbumClicked */{
+public class ArtworkApplication extends Application {
 
     public Catalog getCatalog() {
         return catalog;
@@ -32,7 +38,6 @@ public class ArtworkApplication extends Application/* implements AlbumClicked */
 
     private Catalog catalog = new Catalog();
     private static MainComponent component;
-
     private GlideRequests glide;
 
     @Override
@@ -41,7 +46,6 @@ public class ArtworkApplication extends Application/* implements AlbumClicked */
         component = DaggerMainComponent.builder()
                 .mainModule(new MainModule(this))
                 .build();
-        //catalog = generateCatalog();
         glide = GlideApp.with(this);
     }
 
@@ -49,60 +53,13 @@ public class ArtworkApplication extends Application/* implements AlbumClicked */
         return glide;
     }
 
-    public static MainComponent getComponent(Context context){
-        return ((ArtworkApplication)context.getApplicationContext()).component;
-    }
-
     public static MainComponent getComponent(){
         return component;
     }
 
-    private Catalog generateCatalog(){
-        int n = 20;
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date();
-        try {
-            date = format.parse("2018-10-10");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        List<Album> albums = new ArrayList<>(n);
-        for(int i=0;i<n;i++){
-            albums.add(i,
-                    new Album("Album "+i,
-                            ""+i,
-                            date,
-                            "Rock",
-                            "serg", new ArrayList<Track>(2),
-                            10,
-                            0));
-        }
-        Catalog catalog = new Catalog(albums);
-        return catalog;
+    public boolean getConnectionStatus(){
+        ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
-
-    /*@Override
-    public View.OnClickListener showAlbumInfo() {
-        View.OnClickListener clickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int albumNum = (int) view.getTag(R.integer.albumNum);
-
-                Intent i = new Intent(getApplicationContext(), iTunesAPIService.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt(AppResources.ALBUM_NUMBER, albumNum);
-                bundle.putString(AppResources.SERVICE_CMD, AppResources.SERVICE_GET_TRACKS);
-                i.putExtra(AppResources.INTENT_BUNDLE, bundle);
-                startService(i);
-                *//*Intent showAlbumInfo = new Intent(getApplicationContext(), AlbumInfoActivity.class);
-                showAlbumInfo.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                Bundle b = new Bundle();
-                b.putInt(AppResources.ALBUM_NUMBER, albumNum);
-                showAlbumInfo.putExtra(AppResources.ALBUM_NUMBER_BUNDLE, b);
-                startActivity(showAlbumInfo);*//*
-            }
-        };
-        return clickListener;
-    }*/
 }

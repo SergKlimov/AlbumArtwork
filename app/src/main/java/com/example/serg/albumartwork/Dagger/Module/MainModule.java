@@ -31,4 +31,9 @@ public class MainModule {
     GlideRequests provideGlide(ArtworkApplication app) {
         return app.getGlide();
     }
+
+    @Provides
+    boolean provideConnectionStatus(ArtworkApplication app) {
+        return app.getConnectionStatus();
+    }
 }

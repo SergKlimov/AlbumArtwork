@@ -1,5 +1,6 @@
 package com.example.serg.albumartwork.View;
 
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.widget.LinearLayout;
@@ -10,11 +11,18 @@ public class CatalogView implements ICatalogView{
     private RecyclerView albumsRecyclerView;
     private ProgressBar progressBar;
     private AppCompatTextView nothingFound;
+    private CoordinatorLayout mainLayout;
 
-    public CatalogView(RecyclerView albumsRecyclerView, ProgressBar progressBar, AppCompatTextView nothingFound) {
+    public CatalogView(RecyclerView albumsRecyclerView, ProgressBar progressBar, AppCompatTextView nothingFound, CoordinatorLayout mainLayout) {
         this.albumsRecyclerView = albumsRecyclerView;
         this.progressBar = progressBar;
         this.nothingFound = nothingFound;
+        this.mainLayout = mainLayout;
+    }
+
+    @Override
+    public CoordinatorLayout getMainLayout() {
+        return mainLayout;
     }
 
     @Override
