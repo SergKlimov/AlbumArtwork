@@ -30,7 +30,7 @@ public class ArtworkApplication extends Application/* implements AlbumClicked */
         return catalog;
     }
 
-    private Catalog catalog = null;
+    private Catalog catalog = new Catalog();
     private static MainComponent component;
 
     private GlideRequests glide;
@@ -41,7 +41,7 @@ public class ArtworkApplication extends Application/* implements AlbumClicked */
         component = DaggerMainComponent.builder()
                 .mainModule(new MainModule(this))
                 .build();
-        catalog = generateCatalog();
+        //catalog = generateCatalog();
         glide = GlideApp.with(this);
     }
 

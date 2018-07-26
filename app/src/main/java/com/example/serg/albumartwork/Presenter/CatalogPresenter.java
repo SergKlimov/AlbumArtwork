@@ -34,11 +34,20 @@ public class CatalogPresenter implements ICatalogPresenter {
 
     @Override
     public void updateCatalog(Catalog catalog){
-        RecyclerView.LayoutManager layoutManager = provider.provideLayoutManger();
-        catalogView.getAlbumsRecyclerView().setLayoutManager(layoutManager);
-        catalogView.getAlbumsRecyclerView().setHasFixedSize(true);
-        catalogView.getAlbumsRecyclerView().setAdapter(
-                new AlbumsAdapter(catalog, albumClicked));
+        if(catalog.getAlbums() != null) {
+            if (catalog.getAlbums().size() != 0) {
+                catalogView.getNothingFound().setVisibility(View.INVISIBLE);
+                //updateCatalog(catalog);
+                RecyclerView.LayoutManager layoutManager = provider.provideLayoutManger();
+                catalogView.getAlbumsRecyclerView().setLayoutManager(layoutManager);
+                catalogView.getAlbumsRecyclerView().setHasFixedSize(true);
+                catalogView.getAlbumsRecyclerView().setAdapter(
+                        new AlbumsAdapter(catalog, albumClicked));
+            } else {
+                catalogView.getNothingFound().setVisibility(View.VISIBLE);
+                catalogView.getAlbumsRecyclerView().setVisibility(View.INVISIBLE);
+            }
+        }
     }
 
     @Override
@@ -47,13 +56,14 @@ public class CatalogPresenter implements ICatalogPresenter {
             Catalog catalog = (Catalog) o;
             Log.d("CatPres", "Update!");
             hideProgress();
-            if(catalog.getAlbums().size() != 0) {
+            updateCatalog(catalog);
+            /*if(catalog.getAlbums().size() != 0) {
                 catalogView.getNothingFound().setVisibility(View.INVISIBLE);
                 updateCatalog(catalog);
             } else{
                 catalogView.getNothingFound().setVisibility(View.VISIBLE);
                 catalogView.getAlbumsRecyclerView().setVisibility(View.INVISIBLE);
-            }
+            }*/
         }
     }
 
@@ -105,7 +115,10 @@ public class CatalogPresenter implements ICatalogPresenter {
 
         @Override
         public int getItemCount() {
-            return albums.size();
+            if(albums != null)
+                return albums.size();
+            else
+                return 0;
         }
     }
 }

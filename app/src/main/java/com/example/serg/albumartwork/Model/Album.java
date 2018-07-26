@@ -14,6 +14,16 @@ public class Album {
     private int tracksCount;
     private int iTunesId;
 
+    private AlbumState state;
+
+    public AlbumState getState() {
+        return state;
+    }
+
+    public void setState(AlbumState state) {
+        this.state = state;
+    }
+
     public int getiTunesId() {
         return iTunesId;
     }
@@ -39,6 +49,7 @@ public class Album {
         this.trackList = trackList;
         this.tracksCount = tracksCount;
         this.iTunesId = iTunesId;
+        state = AlbumState.NO_TRACKS;
     }
 
     public String getName() {

@@ -29,7 +29,6 @@ public class AlbumInfoActivity extends AppCompatActivity implements LayoutManage
     private IAlbumInfoView albumInfoView;
     private AlbumInfoPresenterComponent component;
     @Inject Catalog catalog;
-    @Inject GlideRequests glideRequests;
     @Inject IAlbumInfoPresenter albumInfoPresenter;
 
     @Override
@@ -51,13 +50,16 @@ public class AlbumInfoActivity extends AppCompatActivity implements LayoutManage
                 .build();
         albumInfoPresenter = component.getAlbumInfoPresenter();
         catalog = ArtworkApplication.getComponent().getCatalog();
-        glideRequests = ArtworkApplication.getComponent().getGldie();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         catalog.addObserver(albumInfoPresenter);
+        albumInfoPresenter.updateAlbumInfo(catalog
+                .getAlbums().get(
+                        getIntent().getBundleExtra(AppResources.ALBUM_NUMBER_BUNDLE).getInt(AppResources.ALBUM_NUMBER)
+                ));
     }
 
     @Override

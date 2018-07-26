@@ -1,17 +1,24 @@
 package com.example.serg.albumartwork.Presenter;
 
+import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.ImageViewTargetFactory;
+import com.bumptech.glide.request.target.Target;
 import com.example.serg.albumartwork.ArtworkApplication;
 import com.example.serg.albumartwork.Dagger.Module.GlideRequests;
 import com.example.serg.albumartwork.LayoutManagerProvider;
 import com.example.serg.albumartwork.Model.Album;
+import com.example.serg.albumartwork.Model.AlbumState;
+import com.example.serg.albumartwork.Model.Catalog;
 import com.example.serg.albumartwork.R;
 import com.example.serg.albumartwork.View.IAlbumInfoView;
 import com.example.serg.albumartwork.View.TrackView;
@@ -34,39 +41,48 @@ public class AlbumInfoPresenter implements IAlbumInfoPresenter {
         glideRequests = ArtworkApplication.getComponent().getGldie();
     }
 
+
     @Override
     public void updateAlbumInfo(Album album){
-
+        if (album.getState().equals(AlbumState.TRACKS_LOADED)) {
+            albumInfoView.getProgressBar().setVisibility(View.INVISIBLE);
+        }
         albumInfoView.getAlbumName().setText(album.getName());
         albumInfoView.getAlbumArtist().setText("Album by "+album.getArtist());
-        //albumInfoView.getTracksCount().setText("tracks: " + album.getTrackList().size());
         albumInfoView.getAlbumGenre().setText(album.getGenre());
-        //albumInfoView.getProgressBar().setVisibility(View.INVISIBLE);
-        //albumInfoView.getAlbumReleaseDate().setText(album.getReleaseDate().toString());
-        glideRequests.load(album.getCover())
-                .transform(new RoundedCornersTransformation(5,0))
-                .placeholder(R.drawable.album)
-                .fitCenter()
-                .into(albumInfoView.getCover());
+        final String albumCover = album.getCover();
+        ViewTreeObserver treeObserver = albumInfoView.getCover().getViewTreeObserver();
+        treeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                int size = 0;
+                if(albumInfoView.getCover().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+                    size = albumInfoView.getCover().getHeight();
+                } else {
+                    size = albumInfoView.getCover().getWidth();
+                }
+                glideRequests.load(albumCover)
+                        .transform(new RoundedCornersTransformation(5,0))
+                        .placeholder(R.drawable.album)
+                        .override(size, size)
+                        .fitCenter()
+                        .into(albumInfoView.getCover());
+            }
+        });
         RecyclerView.LayoutManager layoutManager = provider.provideLayoutManger();
         albumInfoView.getTracksRecyclerView().setLayoutManager(layoutManager);
         albumInfoView.getTracksRecyclerView().setHasFixedSize(true);
         albumInfoView.getTracksRecyclerView().setAdapter(
                 new TracksAdapter(album)
         );
-        albumInfoView.getProgressBar().setVisibility(View.INVISIBLE);
+
     }
 
     @Override
     public void update(Observable observable, Object o) {
         if (null != o && o instanceof Album){
             Album album = (Album) o;
-            Log.d("AlbumInfoPresenter", "Got album update!");
-            Log.d("AlbumInfoPresenter", album.getName());
-            Log.d("AlbumInfoPresenter", album.getArtist());
-            Log.d("AlbumInfoPresenter", album.getTracksCount()+"");
-            Log.d("AlbumInfoPresenter", album.getGenre());
-            Log.d("AlbumInfoPresenter", "Got album update!");
+            album.setState(AlbumState.TRACKS_LOADED);
             updateAlbumInfo(album);
         }
     }

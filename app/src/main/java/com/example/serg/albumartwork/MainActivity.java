@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements LayoutManagerProv
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("MainActivity", "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -52,17 +53,20 @@ public class MainActivity extends AppCompatActivity implements LayoutManagerProv
                 .catalogPresModule(new CatalogPresModule(catalogView, this, this))
                 .build();
         catalogPresenter = catalogPresComponent.getCatalogPresenter();
-        catalogPresenter.updateCatalog(catalog);
+
     }
 
     @Override
     protected void onResume() {
+        Log.d("MainActivity", "onResume");
         super.onResume();
         catalog.addObserver(this.catalogPresenter);
+        catalogPresenter.updateCatalog(catalog);
     }
 
     @Override
     protected void onPause() {
+        Log.d("MainActivity", "onPause");
         super.onPause();
         catalog.deleteObservers();
     }
